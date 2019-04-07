@@ -18,7 +18,7 @@ namespace StringBuilder.ViewModels
 
         #region Buttons
         public ICommand CmdBuild => _buttonCommands.CmdBuild;
-        public ICommand CndCopy => _buttonCommands.CmdCopy;
+        public ICommand CmdCopy => _buttonCommands.CmdCopy;
         #endregion
 
         #region Properties
