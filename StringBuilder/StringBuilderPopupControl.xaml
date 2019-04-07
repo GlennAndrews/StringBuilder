@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="StringBuilder.StringBuilderPopupControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
+             xmlns:VM="clr-namespace:StringBuilder.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300"
+             Name="StringBuilderCreator">
+
+    <UserControl.DataContext>
+        <VM:StringBuilderPopupViewModel />
+    </UserControl.DataContext>
+
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Name="tbString" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Input, Mode=OneWayToSource}" TextWrapping="NoWrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"></TextBox>
+            <Button Height="20" Width="45" Grid.Row="1" Grid.Column="0" Command="{Binding CmdBuild, Mode=OneWay}">Build</Button>
+            <Button Height="20" Width="45" Grid.Row="1" Grid.Column="2" Command="{Binding CmdCopy, Mode=OneWay}">Copy</Button>
+        </Grid>
+        <GridSplitter Grid.Row="1" Background="Silver" HorizontalAlignment="Stretch" Height="5"></GridSplitter>
+        <TextBlock Name="tbOutput" Background="Bisque" Grid.Row="2" Text="{Binding Output, Mode=OneWay}"></TextBlock>
+    </Grid>
+</UserControl>
