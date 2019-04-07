@@ -29,11 +29,13 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBox Name="tbString" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Input, Mode=OneWayToSource}" TextWrapping="NoWrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"></TextBox>
+            <TextBox Name="tbString" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Input, Mode=OneWayToSource}" TextWrapping="NoWrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" FontFamily="Courier New"></TextBox>
             <Button Height="20" Width="45" Grid.Row="1" Grid.Column="0" Command="{Binding CmdBuild, Mode=OneWay}">Build</Button>
             <Button Height="20" Width="45" Grid.Row="1" Grid.Column="2" Command="{Binding CmdCopy, Mode=OneWay}">Copy</Button>
         </Grid>
         <GridSplitter Grid.Row="1" Background="Silver" HorizontalAlignment="Stretch" Height="5"></GridSplitter>
-        <TextBlock Name="tbOutput" Background="Bisque" Grid.Row="2" Text="{Binding Output, Mode=OneWay}"></TextBlock>
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <TextBlock Name="tbOutput" Background="Bisque"  Text="{Binding Output, Mode=OneWay}" FontFamily="Courier New" TextWrapping="NoWrap"></TextBlock>
+        </ScrollViewer>
     </Grid>
 </UserControl>
