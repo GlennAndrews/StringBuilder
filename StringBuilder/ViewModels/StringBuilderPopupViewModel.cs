@@ -1,16 +1,25 @@
 ﻿using StringBuilder.Commands;
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
 
 namespace StringBuilder.ViewModels
 {
     public class StringBuilderPopupViewModel : INotifyPropertyChanged
     {
+        #region Privates
+        private ButtonCommands _buttonCommands;
+        #endregion
+
+        #region Events
         public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+        #region Buttons
+        public ICommand CmdBuild => _buttonCommands.CmdBuild;
+        public ICommand CmdCopy => _buttonCommands.CmdCopy;
+        #endregion
 
         #region Properties
         private string _input;
@@ -49,91 +58,21 @@ namespace StringBuilder.ViewModels
         }
         #endregion
 
-        #region Build Command
-        private ICommand _buttonBuildClick;
-        public ICommand CmdBuild
-        {
-            get
-            {
-                if (_buttonBuildClick == null)
-                {
-                    _buttonBuildClick = new RelayCommand(
-                        p => true,
-                        p => this.Build());
-                }
-                return _buttonBuildClick;
-            }
-        }
-
-        /// <summary>
-        /// Handles click on the button
-        /// </summary>
-        [SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions", Justification = "Sample code")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Default event handler naming pattern")]
-        private void Build()
-        {
-            var sb = new System.Text.StringBuilder();
-
-            if (!string.IsNullOrWhiteSpace(_input))
-            {
-                string[] stringSeparators = new string[] { "\r\n" };
-                string[] lines = _input.Split(stringSeparators, StringSplitOptions.None);
-
-                sb.AppendLine("var sb = new StringBuilder();\r\n");
-
-                foreach (var line in lines)
-                {
-                    sb.AppendLine($"sb.AppendLine(\"{line}\");");
-                }
-            }
-
-            Output = sb.ToString();
-        }
-        #endregion
-
-        #region Copy Command
-        private ICommand _buttonCopyClick;
-        public ICommand CmdCopy
-        {
-            get
-            {
-                if (_buttonCopyClick == null)
-                {
-                    _buttonCopyClick = new RelayCommand(
-                        p => true,
-                        p => this.Copy());
-                }
-                return _buttonCopyClick;
-            }
-        }
-
-        /// <summary>
-        /// Handles click on the button
-        /// </summary>
-        [SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions", Justification = "Sample code")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Default event handler naming pattern")]
-        private void Copy()
-        {
-            Clipboard.SetText(_output);
-        }
-
-        #endregion
-
+        #region Constructors
         public StringBuilderPopupViewModel()
         {
-
+            _buttonCommands = new ButtonCommands
+            {
+                ViewModel = this
+            };
         }
+        #endregion
 
-        // This method is called by the Set accessor of each property.
-        // The CallerMemberName attribute that is applied to the optional propertyName
-        // parameter causes the property name of the caller to be substituted as an argument.
+        #region Private Methods
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        #endregion
     }
 }
